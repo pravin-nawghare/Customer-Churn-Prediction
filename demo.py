@@ -1,10 +1,5 @@
 
-from churn_prediction.exception import CustomerChurnException
-import sys
+from churn_prediction.pipeline.training_pipeline import TrainPipeline
 
-
-
-try:
-    a = 2/0
-except Exception as e:
-    raise CustomerChurnException(e,sys)
+obj = TrainPipeline()
+obj.run_pipeline()
