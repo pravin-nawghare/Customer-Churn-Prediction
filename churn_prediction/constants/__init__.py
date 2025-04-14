@@ -18,6 +18,8 @@ TARGET_COLUMN = 'customer_status'
 PREPROCESSING_OBJECT_FILE_PATH = "preprocessing.pkl"
 SCHEMA_FILE_PATH = os.path.join("config","schema.yaml")
 
+SAMPLING_RATIO = 0.9
+
 """
 Data Ingestion related constants
 """

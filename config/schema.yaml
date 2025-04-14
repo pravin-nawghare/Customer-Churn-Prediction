@@ -83,17 +83,18 @@ drop_columns:
   - avg_monthly_gb_download
   - monthly_charge
   - total_charges
+  - total_refunds
 
 # for data tranformation
 num_features:
   - number_of_dependents
   - number_of_referrals
-  - total_refunds
   - total_extra_data_charges
   - total_revenue 
 
 or_columns:
   - contract
+  - refund_category
 
 oh_columns:
   - married 
@@ -112,4 +113,5 @@ oh_columns:
   - payment_method 
 
 transform_columns:
-# to be decided yet
+  - total_extra_data_charges
+  - total_revenue 

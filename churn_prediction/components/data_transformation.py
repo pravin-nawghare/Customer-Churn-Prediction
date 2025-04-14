@@ -2,7 +2,7 @@ import sys
 
 import numpy as np
 import pandas as pd
-import imblearn
+from imblearn.over_sampling import ADASYN
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, OrdinalEncoder, PowerTransformer
 from sklearn.compose import ColumnTransformer
@@ -13,7 +13,7 @@ from churn_prediction.entity.artifact_entity import (DataIngestionArtifact,
 from churn_prediction.entity.config_entity import DataTransformationConfig
 from churn_prediction.logger import logging
 from churn_prediction.exception import CustomerChurnException
-from churn_prediction.constants import SCHEMA_FILE_PATH, TARGET_COLUMN
+from churn_prediction.constants import SCHEMA_FILE_PATH, TARGET_COLUMN, SAMPLING_RATIO
 from churn_prediction.utils.main_utils import save_object, save_numpy_array_data,read_yaml_file,drop_columns
 from churn_prediction.entity.estimator import TargetValueMapping
 
@@ -108,6 +108,11 @@ class DataTransformation:
                 input_feature_train_df = train_df.drop(columns=[TARGET_COLUMN],axis=1)
                 target_feature_train_df = train_df[TARGET_COLUMN]
                 logging.info("Got train features and test features of Training dataset")
+                
+                bins = [0, 10, 20, 35, 50]
+                labels = ['No Refunds', 'Low Refunds', 'Medium Refunds', 'High Refunds']
+                input_feature_train_df['refund_category'] = pd.cut(input_feature_train_df['total_refunds'], bins=bins, labels=labels,include_lowest=True)
+                logging.info("Created refund_category column in train features")
 
                 drop_cols = self._schema_config['drop_columns']
 
@@ -121,13 +126,18 @@ class DataTransformation:
 
                 input_feature_test_df = test_df.drop(columns=[TARGET_COLUMN],axis=1)
                 target_feature_test_df = test_df[TARGET_COLUMN]
+
+                input_feature_test_df['refund_category'] = pd.cut(input_feature_test_df['total_refunds'], bins=bins, labels=labels,include_lowest=True)
+                logging.info("Created refund_category column in test features")
                 
                 input_feature_test_df = drop_columns(df=input_feature_test_df,cols=drop_cols)
+
                 logging.info("Drop the columns in drop_cols of Test dataset")
                 
                 target_feature_test_df = target_feature_test_df.replace(
                     TargetValueMapping()._asdict()
                 )
+                logging.info("Got train features and test features of test dataset")
                 logging.info("Applying preprocessing object on training dataset and testing dataset")
 
                 input_feature_train_arr = preprocessor.fit_transform(input_feature_train_df)
@@ -136,9 +146,19 @@ class DataTransformation:
                 input_feature_test_arr = preprocessor.fit_transform(input_feature_test_df)
                 logging.info("Used the preprocessor object to fit_transform the test features")
 
-#######---->>>  logging.info("Applying balancing algo the data")
+                logging.info("Applying ADASYN on training dataset")
+                ada = ADASYN(sampling_strategy=SAMPLING_RATIO, random_state=0)
+                input_feature_train_final, target_feature_train_final = ada.fit_resample(input_feature_train_arr, target_feature_train_df)
+                logging.info("Used the ADASYN to fit_resample the train features")
 
+                logging.info("Applying ADASYN on test dataset")
+                input_feature_test_final, target_feature_test_final = ada.fit_resample(input_feature_test_arr, target_feature_test_df)
+                logging.info("Used the ADASYN to fit_resample the test features")
 
+                logging.info("Created train array and test array")
+
+                train_arr = np.c_[input_feature_train_final, np.array(target_feature_train_final)]
+                test_arr = np.c_[input_feature_test_final, np.array(target_feature_test_final)]
 
                 save_object(self.data_transformation_config.transformed_object_file_path, preprocessor)
                 save_numpy_array_data(self.data_transformation_config.transformed_train_file_path, array=train_arr)
