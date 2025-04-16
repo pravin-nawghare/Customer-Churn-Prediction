@@ -70,12 +70,9 @@ categorical_columns:
 
 drop_columns:
   - gender
-  - latitude
-  - longitude
   - age
   - unlimited_data
   - phone_service
-  - age
   - zip_code
   - total_long_distance_charges
   - tenure_in_months

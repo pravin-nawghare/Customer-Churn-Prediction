@@ -15,7 +15,7 @@ from churn_prediction.entity.artifact_entity import (DataIngestionArtifact,
 class TrainPipeline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()
-        self.data_Transformation_config = DataTransformationConfig()
+        self.data_transformation_config = DataTransformationConfig()
 
     def start_data_ingestion(self)-> DataIngestionArtifact:
         """
@@ -55,7 +55,7 @@ class TrainPipeline:
                                                     data_transformation_config=self.data_transformation_config,
                                                     data_validation_artifact=data_validation_artifact)
             
-            data_transformation_artifact = data_transformation.initiate_data_transformation()
+            data_transformation_artifact = data_transformation.initialize_data_transformation()
             return data_transformation_artifact
         except Exception as e:
             raise CustomerChurnException(e,sys)

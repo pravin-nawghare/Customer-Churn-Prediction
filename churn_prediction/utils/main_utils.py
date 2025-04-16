@@ -5,6 +5,8 @@ import numpy as np
 import dill
 import yaml
 from pandas import DataFrame
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import recall_score
 
 from churn_prediction.exception import CustomerChurnException
 from churn_prediction.logger import logging
@@ -93,7 +95,7 @@ def drop_columns(df: DataFrame, cols: list)-> DataFrame:
     df: pandas DataFrame
     cols: list of columns to be dropped
     """
-    logging.info("Entered drop_columns methon of utils")
+    logging.info("Entered drop_columns method of utils")
 
     try:
         df = df.drop(columns=cols, axis=1)
@@ -103,3 +105,4 @@ def drop_columns(df: DataFrame, cols: list)-> DataFrame:
         return df
     except Exception as e:
         raise CustomerChurnException(e, sys) from e
+

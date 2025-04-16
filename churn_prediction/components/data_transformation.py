@@ -60,14 +60,14 @@ class DataTransformation:
 
             oh_columns = self._schema_config['oh_columns']
             or_columns = self._schema_config['or_columns']
-            transform_columns = self._schema_config['drop_columns']
+            transform_columns = self._schema_config['transform_columns']
             num_features = self._schema_config['num_features']
 
             logging.info("Initialize Power Transformer")
 
             transformer_pipeline = Pipeline(
                 steps=[
-                    'transformer',PowerTransformer(method='yeo-johnson')
+                    ('transformer',PowerTransformer(method='yeo-johnson'))
                 ]
             )
             
@@ -77,7 +77,7 @@ class DataTransformation:
                     ('OrdinalEncoder',or_transformer, or_columns),
                     ('transformer', transformer_pipeline, transform_columns),
                     ('StandardScaler',numeric_transformer, num_features)
-                ]
+                ], remainder='passthrough'
             )
 
             logging.info("Created preprocessor object from Column Transformer")
@@ -105,20 +105,30 @@ class DataTransformation:
                 train_df = DataTransformation.read_data(file_path=self.data_ingestion_artifact.trained_file_path)
                 test_df = DataTransformation.read_data(file_path=self.data_ingestion_artifact.test_file_path)
 
+                logging.info(f"Train df loaded from data_transformation.read_data shape: {train_df.shape}")
+                logging.info(f"Test df loaded from data_transformation.read_data shape: {test_df.shape}")
+
                 input_feature_train_df = train_df.drop(columns=[TARGET_COLUMN],axis=1)
                 target_feature_train_df = train_df[TARGET_COLUMN]
                 logging.info("Got train features and test features of Training dataset")
+
+                logging.info(f"Input feature train set shape after dropping target feature: {input_feature_train_df.shape}")
+                logging.info(f"Target feature train set shape after dropping target feature: {target_feature_train_df.shape}")
                 
                 bins = [0, 10, 20, 35, 50]
                 labels = ['No Refunds', 'Low Refunds', 'Medium Refunds', 'High Refunds']
                 input_feature_train_df['refund_category'] = pd.cut(input_feature_train_df['total_refunds'], bins=bins, labels=labels,include_lowest=True)
                 logging.info("Created refund_category column in train features")
+                logging.info(f"Input feature train df shape after creating refund_category: {input_feature_train_df.shape}")
+
+                logging.info(f"Refund category from input feature train df value counts:{input_feature_train_df['refund_category'].value_counts()}")
 
                 drop_cols = self._schema_config['drop_columns']
 
                 logging.info("Drop the columns in drop_cols of Training dataset")
 
                 input_feature_train_df = drop_columns(df=input_feature_train_df,cols=drop_cols)
+                logging.info(f"Input feature train df shape after dropping irrevelant features: {input_feature_train_df.shape}")
                 
                 target_feature_train_df = target_feature_train_df.replace(
                     TargetValueMapping()._asdict()
@@ -127,8 +137,14 @@ class DataTransformation:
                 input_feature_test_df = test_df.drop(columns=[TARGET_COLUMN],axis=1)
                 target_feature_test_df = test_df[TARGET_COLUMN]
 
+                logging.info(f"Input feature test df shape after dropping target feature: {input_feature_train_df.shape}")
+                logging.info(f"Target feature test df shape after dropping target feature: {target_feature_train_df.shape}")
+
                 input_feature_test_df['refund_category'] = pd.cut(input_feature_test_df['total_refunds'], bins=bins, labels=labels,include_lowest=True)
                 logging.info("Created refund_category column in test features")
+                logging.info(f"Input feature test df shape after creating refund_category: {input_feature_test_df.shape}")
+
+                logging.info(f"Refund category from input feature test df value counts:{input_feature_test_df['refund_category'].value_counts()}")
                 
                 input_feature_test_df = drop_columns(df=input_feature_test_df,cols=drop_cols)
 
@@ -161,7 +177,7 @@ class DataTransformation:
                 test_arr = np.c_[input_feature_test_final, np.array(target_feature_test_final)]
 
                 save_object(self.data_transformation_config.transformed_object_file_path, preprocessor)
-                save_numpy_array_data(self.data_transformation_config.transformed_train_file_path, array=train_arr)
+                save_numpy_array_data(self.data_transformation_config.transformed_trained_file_path, array=train_arr)
                 save_numpy_array_data(self.data_transformation_config.transformed_test_file_path, array=test_arr)
                 logging.info("Saved the preprocessor object")
 
