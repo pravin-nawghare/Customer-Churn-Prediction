@@ -4,8 +4,7 @@ from churn_prediction.logger import logging
 from churn_prediction.components.data_ingestion import DataIngestion
 from churn_prediction.components.data_validation import DataValidation
 from churn_prediction.components.data_transformation import DataTransformation
-
-from model_trainer import ModelTrainer
+from churn_prediction.components.model_trainer import ModelTrainer
 from churn_prediction.entity.config_entity import (DataIngestionConfig,
                                                    DataTransformationConfig,
                                                    ModelTrainerConfig)

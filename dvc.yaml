@@ -2,8 +2,12 @@ stages:
   data_ingestion:
     cmd: python churn_prediction/components/data_ingestion.py
     deps: 
+      - churn_prediction/entity/config_entity.py
+      - churn_prediction/entity/artifact_entity.py
       - churn_prediction/data_access/customer_churn_data.py
       - churn_prediction/components/data_ingestion.py
+      - churn_prediction/logger/__init__.py
+      - churn_prediction/exception/__init__.py
       
     outs: 
       - artifact/data_ingestion/feature_store/customer_churn_data.csv
@@ -17,3 +21,36 @@ stages:
       - artifact/data_ingestion/feature_store/customer_churn_data.csv
       - artifact/data_ingestion/ingested/test.csv
       - artifact/data_ingestion/ingested/train.csv
+      - churn_prediction/logger/__init__.py
+      - churn_prediction/exception/__init__.py
+      - churn_prediction/constants/__init__.py
+      - churn_prediction/entity/artifact_entity.py
+      - churn_prediction/utils/main_utils.py
+      - config/schema.yaml
+  data_transformation:
+    cmd: python churn_prediction/components/data_transformation.py
+    deps:
+      - churn_prediction/components/data_transformation.py
+      - churn_prediction/logger/__init__.py
+      - churn_prediction/exception/__init__.py
+      - churn_prediction/entity/config_entity.py
+      - churn_prediction/entity/artifact_entity.py
+      - churn_prediction/constants/__init__.py
+      - churn_prediction/utils/main_utils.py
+      - churn_prediction/entity/estimator.py
+    outs:
+      - artifact/data_transformation/transformed/train.npy
+      - artifact/data_transformation/transformed/test.npy
+      - artifact/data_transformation/transformed_object/preprocessing.pkl
+  model_trainer:
+    cmd: python churn_prediction/components/model_trainer.py
+    deps:
+      - churn_prediction/components/model_trainer.py
+      - churn_prediction/logger/__init__.py
+      - churn_prediction/exception/__init__.py
+      - churn_prediction/entity/config_entity.py
+      - churn_prediction/entity/artifact_entity.py
+      - churn_prediction/utils/main_utils.py
+      - churn_prediction/entity/estimator.py
+    outs:
+      - artifact/model_trainer/trained_model/model.pkl

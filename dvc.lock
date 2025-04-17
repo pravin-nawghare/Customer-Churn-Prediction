@@ -1,0 +1,169 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python churn_prediction/components/data_ingestion.py
+    deps:
+    - path: churn_prediction/components/data_ingestion.py
+      hash: md5
+      md5: c84d3b3852a6540152b26b794694ec65
+      size: 15566
+    - path: churn_prediction/data_access/customer_churn_data.py
+      hash: md5
+      md5: 116ce051f3bd514e5f40564378260e32
+      size: 1451
+    - path: churn_prediction/entity/artifact_entity.py
+      hash: md5
+      md5: 4ccd10d018964da87d1d0af1388b3304
+      size: 673
+    - path: churn_prediction/entity/config_entity.py
+      hash: md5
+      md5: 1eeb1bd2e5a9f2f8123d2b9e2f762e13
+      size: 2472
+    - path: churn_prediction/exception/__init__.py
+      hash: md5
+      md5: 23bf9dcb3c70b3c59dc469629409933d
+      size: 778
+    - path: churn_prediction/logger/__init__.py
+      hash: md5
+      md5: 95b2f33a9ef867fb41a5a907b5c82f53
+      size: 439
+    outs:
+    - path: artifact/data_ingestion/feature_store/customer_churn_data.csv
+      hash: md5
+      md5: 6996f2d209c6443b19382028561300fe
+      size: 1261957
+    - path: artifact/data_ingestion/ingested/test.csv
+      hash: md5
+      md5: 74083f8de9f50ecdc70fdfc38a285f78
+      size: 274567
+    - path: artifact/data_ingestion/ingested/train.csv
+      hash: md5
+      md5: 66706c92375c813004399d683516d5d5
+      size: 1098785
+  data_validation:
+    cmd: python churn_prediction/components/data_validation.py
+    deps:
+    - path: artifact/data_ingestion/feature_store/customer_churn_data.csv
+      hash: md5
+      md5: 6996f2d209c6443b19382028561300fe
+      size: 1261957
+    - path: artifact/data_ingestion/ingested/test.csv
+      hash: md5
+      md5: 74083f8de9f50ecdc70fdfc38a285f78
+      size: 274567
+    - path: artifact/data_ingestion/ingested/train.csv
+      hash: md5
+      md5: 66706c92375c813004399d683516d5d5
+      size: 1098785
+    - path: churn_prediction/components/data_validation.py
+      hash: md5
+      md5: 4d423ebcdc53b08657cdc8119b5d0765
+      size: 5478
+    - path: churn_prediction/constants/__init__.py
+      hash: md5
+      md5: 4218a6a60a4b0d96b8d0303e4f50d1a9
+      size: 1413
+    - path: churn_prediction/entity/artifact_entity.py
+      hash: md5
+      md5: 4ccd10d018964da87d1d0af1388b3304
+      size: 673
+    - path: churn_prediction/exception/__init__.py
+      hash: md5
+      md5: 23bf9dcb3c70b3c59dc469629409933d
+      size: 778
+    - path: churn_prediction/logger/__init__.py
+      hash: md5
+      md5: 95b2f33a9ef867fb41a5a907b5c82f53
+      size: 439
+    - path: churn_prediction/utils/main_utils.py
+      hash: md5
+      md5: 112e53bf42e98c1b96c8c73550e503cb
+      size: 3139
+    - path: config/schema.yaml
+      hash: md5
+      md5: 09651b152e8dd7d8585e2bb96ef87d70
+      size: 2503
+  data_transformation:
+    cmd: python churn_prediction/components/data_transformation.py
+    deps:
+    - path: churn_prediction/components/data_transformation.py
+      hash: md5
+      md5: f11ba48c9adefb5438a53fb39328135d
+      size: 10880
+    - path: churn_prediction/constants/__init__.py
+      hash: md5
+      md5: 4218a6a60a4b0d96b8d0303e4f50d1a9
+      size: 1413
+    - path: churn_prediction/entity/artifact_entity.py
+      hash: md5
+      md5: 4ccd10d018964da87d1d0af1388b3304
+      size: 673
+    - path: churn_prediction/entity/config_entity.py
+      hash: md5
+      md5: 1eeb1bd2e5a9f2f8123d2b9e2f762e13
+      size: 2472
+    - path: churn_prediction/entity/estimator.py
+      hash: md5
+      md5: 765c14aaf4fafbd7bd7323c5d03f4ba3
+      size: 1897
+    - path: churn_prediction/exception/__init__.py
+      hash: md5
+      md5: 23bf9dcb3c70b3c59dc469629409933d
+      size: 778
+    - path: churn_prediction/logger/__init__.py
+      hash: md5
+      md5: 95b2f33a9ef867fb41a5a907b5c82f53
+      size: 439
+    - path: churn_prediction/utils/main_utils.py
+      hash: md5
+      md5: 112e53bf42e98c1b96c8c73550e503cb
+      size: 3139
+    outs:
+    - path: artifact/data_transformation/transformed/test.npy
+      hash: md5
+      md5: 40f38fbe268473a9e6da81ec34440241
+      size: 741600
+    - path: artifact/data_transformation/transformed/train.npy
+      hash: md5
+      md5: d39d0fb546f64e714cc379a62734dbe3
+      size: 2978424
+    - path: artifact/data_transformation/transformed_object/preprocessing.pkl
+      hash: md5
+      md5: 84452d8e1e4b764ed241b7112363b425
+      size: 4482
+  model_trainer:
+    cmd: python churn_prediction/components/model_trainer.py
+    deps:
+    - path: churn_prediction/components/model_trainer.py
+      hash: md5
+      md5: 91b6368ce4feaf44f03cb267b9a69f18
+      size: 9475
+    - path: churn_prediction/entity/artifact_entity.py
+      hash: md5
+      md5: 4ccd10d018964da87d1d0af1388b3304
+      size: 673
+    - path: churn_prediction/entity/config_entity.py
+      hash: md5
+      md5: 1eeb1bd2e5a9f2f8123d2b9e2f762e13
+      size: 2472
+    - path: churn_prediction/entity/estimator.py
+      hash: md5
+      md5: 765c14aaf4fafbd7bd7323c5d03f4ba3
+      size: 1897
+    - path: churn_prediction/exception/__init__.py
+      hash: md5
+      md5: 23bf9dcb3c70b3c59dc469629409933d
+      size: 778
+    - path: churn_prediction/logger/__init__.py
+      hash: md5
+      md5: 95b2f33a9ef867fb41a5a907b5c82f53
+      size: 439
+    - path: churn_prediction/utils/main_utils.py
+      hash: md5
+      md5: 112e53bf42e98c1b96c8c73550e503cb
+      size: 3139
+    outs:
+    - path: artifact/model_trainer/trained_model/model.pkl
+      hash: md5
+      md5: ee349eae7650ac92b13ccafcbbb45921
+      size: 5614
