@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customer Churn Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light static-top">
+        <div class="container-fluid">
+           <!-- <a class="navbar-brand" href="https://ineuron.ai"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIkAAAAlCAMAAABBJDpuAAAAVFBMVEX/fgD/iQA7NzIyMjMnNYInNYEnNYInNYEzMzInNYQnNYETJzsnNYIwN1wxMjNoTis4O1YrNm0xOF47PE9DP0dEQEVpTVkAJJ4nNYEOLJHJbiAzMzOmmmHRAAAAFnRSTlOh/vu+986oen9fP2UqEzQkFAIDAAEEILVBJQAAA3FJREFUWMPNmO2WoyAMQG0VBARtdVRs3/89NwkgaF1rd2aOm18tIrnkgwSz7n+R7LcV1ELkeS7E7VySRlyfQXJhTiO55c+liP4cEuH1X8E7gaV+S3Jv2zYZ/Vr+/Sdx2vP6doc/fSPcf/GOpLSFVXFUW8t+giRP47TOd60yk1hbxIhSP0ACKPWrvw7YBIT/lcQY84G3Wk17ugWQfg5UsQJpjflKSLQi7xTWyk0SXTJ4VnB5D1yccxmp4Z+mX5KGNS+SPXVNll0ulyxL0wYmloBB6zL/MpCoAgjAJiUM6w0SboMwPUdRogvNKcNM3smFdRvEcJJkKcflQa+X0pNIfBGW0zKqjyQtw4VLKQlI7ZLgdrRNSZDjMQx2GB4pCkxkCrfGWUTJ0Egan6muCHgJCUwtnCk0mrJ9Q8K5LUqtdSfynkAedhynaRqngVDaXLiJEAzkFkM71IuIlWRYtSQpbXSZDvQ7JPCei9brs+oaABkn74LRIkpFaVxGnzjvIxTYREOoEwn5r01JTDRTcO87Eu3zNUeTPKZpjrIRrNIDCjzALbPk7LJMIokOEQu2K7yKQAKvFDF9pVe0R+LGb7h1MMkw2ijjA/1zhSfSphvEAChXJEhAqwYStIJWXnTpvbdH4hTUwSQ2JRmQpILDLYbB7J41SYiLcNozu5Z3JMo7RxBJahI7WSRByCMkqJt9hySESbVJcvmARJGFExJmdBSl2oM2+T4JLWfgaGFptizlPUm1FydHSdyZ7UnS4ySph2kS0kJrkvr5NJg7dnrJnfxgxPozRPGtkyPNOxtaiDvbIAF9L+5B5zTI2BwlwXmM+U3zReav3o0F8oUEFFZ42McDZYomOUziFmezgWyo251Uc1nyKJol7URCEvIYUEbHYaEGQi9C9egwCdVfHwiaajfjKMUcHcRacCylhWJbJDfq47EEDhYqoIWjHnwDXZPpPiChPQelLU+Cbm4w50FmYgkvFwpiWwCC/Um/SLcNElOC9RVj6qWpCiEMvRUK4zLpdKmPw8rVldy/qxjn60wLrVLWJIPLiZJRr3fsvnOHPvare+lB93tb37T20D82jqOt+zNuXhuNvNhp7X+PpHb3rvV9R5xjE2SpyCN9ffQO+GtWIZr5Xnytz4gTMIRYfys47/uJEXny/aQ/95tSUwmU+uRvSp/IHzQqZYpYrQmxAAAAAElFTkSuQmCC" /></a> -->
+        </div>
+     </nav>
+    <section>
+        <div class="container-fluid">
+            <div class="container">
+                <form action="/" method="post">
+                    <legend>Does the customer will STAY or will LEAVE. Let's find out!</legend>
+                    <div class="mb-3">
+                        <label for="married">married</label>
+                        <select class="form-control" id="married" name="married" placeholder="Is Married" required="required">
+                          <option value="" disabled selected>Is Married</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                        </select>
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="city">city</label>
+                        <select class="form-control" id="city" name="city" placeholder="City" required="required">
+                            <option value="" disabled selected>City</option>
+                            <option>Escondido</option>
+                            <option>Fresno</option>
+                            <option>Long Beach</option>
+                            <option>Los Angeles</option>
+                            <option>Oakland</option>
+                            <option>Sacramento</option>
+                            <option>San Diego</option>
+                            <option>San Francisco</option>
+                            <option>San Jose</option>
+                            <option>Other</option>
+                        </select>
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="multiple_lines">Multiple Lines</label>
+                        <select class="form-control" id="multiple_lines" name="multiple_lines" placeholder="Multiple Lines" required="required">
+                            <option value="" disabled selected>Multiple Lines</option>
+                            <option>No</option>
+                            <option>Yes</option>
+                        </select>
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="number_of_dependents">Number_of Dependents</label>
+                        <input type="number" class="form-control" id="number_of_dependents" name="number_of_dependents" min="0" max="9" placeholder="select between 0 to 9" required="required">
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="number_of_referrals">Number of Referrals</label>
+                        <input type="number" class="form-control" id="number_of_referrals" name="number_of_referrals" min="0" max="11" placeholder="select between 0 to 11" required="required">
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label for="device_protection_plan">Device Protection Plan</label>
+                        <select class="form-control" id="device_protection_plan" name="device_protection_plan" placeholder="Do you have a device protection plan?" required="required">
+                          <option value="" disabled selected>Device Protection Plan</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                        </select>
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="total_revenue">Total Revenue</label>
+                        <input type="number" class="form-control" id="total_revenue" name="total_revenue" min="20" max="12000" placeholder="select between 20 to 12000" required="required">
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="online_security">Online Security</label>
+                        <select class="form-control" id="online_security" name="online_security" placeholder="Do you have online security" required="required">
+                            <option value="" disabled selected>Online Security</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="total_extra_data_charges">Total Extra Data Charges</label>
+                        <input type="number" class="form-control" id="total_extra_data_charges" name="total_extra_data_charges" min="0" max="150" placeholder="select between 0 to 150" required="required">
+                        </select>
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="payment_method">Payment Method</label>
+                        <select class="form-control" id="payment_method" name="payment_method" placeholder="Select your payment method" required="required">
+                          <option value="" disabled selected>Payment Method</option>
+                          <option>Mailed Check</option>
+                          <option>Credit Card</option>
+                          <option>Bank Withdrawal</option>
+                      </select>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="paperless_billing">Paperless Billing</label>
+                        <select class="form-control" id="paperless_billing" name="paperless_billing" placeholder="Paperless Billing" required="required">
+                            <option value="" disabled selected>Paperless Billing</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="internet_service">Internet Service</label>
+                        <select class="form-control" id="internet_service" name="internet_service" placeholder="Internet Service" required="required">
+                            <option value="" disabled selected>Internet Service</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="internet_type">Internet Type</label>
+                        <select class="form-control" id="internet_type" name="internet_type" placeholder="Internet Type" required="required">
+                          <option value="" disabled selected>Internet Type</option>
+                          <option>Cable</option>
+                          <option>DSL</option>
+                          <option>Fiber Optic</option>
+                      </select>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="online_backup">Online Backup</label>
+                        <select class="form-control" id="online_backup" name="online_backup" placeholder="Online Backup" required="required">
+                            <option value="" disabled selected>Online Backup</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="premium_tech_support">Premium Tech Support</label>
+                        <select class="form-control" id="premium_tech_support" name="premium_tech_support" placeholder="Premium Tech Support" required="required">
+                            <option value="" disabled selected>Premium Tech Support</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="contract">Contract</label>
+                        <select class="form-control" id="contract" name="contract" placeholder="Contract" required="required">
+                          <option value="" disabled selected>Contract</option>
+                          <option>Month-to-Month</option>
+                          <option>One Year</option>
+                          <option>Two Year</option>
+                      </select>
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label for="refund_category">Refund Category</label>
+                        <select class="form-control" id="refund_category" name="refund_category" placeholder="Refund Category" required="required">
+                          <option value="" disabled selected>Refund Category</option>
+                          <option>No Refunds</option>
+                          <option>Low Refunds</option>
+                          <option>Medium Refunds</option>
+                          <option>High Refunds</option>
+                      </select>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="streaming_tv">streaming_tv</label>
+                        <select class="form-control" id="streaming_tv" name="streaming_tv" placeholder="Streaming TV" required="required">
+                            <option value="" disabled selected>Streaming TV</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="streaming_movies">Streaming Movies</label>
+                        <select class="form-control" id="streaming_movies" name="streaming_movies" placeholder="Streaming Movies" required="required">
+                            <option value="" disabled selected>Streaming Movies</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="streaming_music">Streaming Music</label>
+                        <select class="form-control" id="streaming_music" name="streaming_music" placeholder="Streaming Music" required="required">
+                            <option value="" disabled selected>Streaming Music</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                      </div>
+        
+                        <input class="btn btn-primary" type="submit" value="Predict Customer-Status" required />
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="text-center text-black">
+                <h2 class="display-4 fw-bolder">Customer Churn Status: {{context}} </h2>
+            </div>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        $(".input").focus(function(){
+            $(this).parent().addClass("focus");
+        }).blur(function(){
+            if($(this).val() === ''){
+                $(this).parent().removeClass("focus");
+            }
+        })
+    </script>
+  </body>
+</html>
