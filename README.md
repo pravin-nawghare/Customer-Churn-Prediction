@@ -57,7 +57,7 @@ The aim of the project is to predict customer who is likely to leave the telecom
 *----------------------------------------------------------------------*
 
 ## Project Structure
-
+`
 ├── data/                   # Sample data or data loaders
 ├── src/                    # ML scripts: preprocessing, training, evaluation
 │   ├── data_ingestion.py
@@ -71,7 +71,7 @@ The aim of the project is to predict customer who is likely to leave the telecom
 ├── .github/workflows/      # GitHub Actions workflows
 ├── requirements.txt
 └── README.md
-
+`
 *----------------------------------------------------------------------*
 
 ## Pipeline Details
