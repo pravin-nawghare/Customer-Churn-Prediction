@@ -139,7 +139,7 @@ class CustomerChurnClassifier:
                 bucket_name=self.prediction_pipeline_config.model_bucket_name,
                 model_path=self.prediction_pipeline_config.model_file_path,
             )
-            result =  model.predict(dataframe)
+            result =  model.give_prediction(dataframe)
             
             return result
         
